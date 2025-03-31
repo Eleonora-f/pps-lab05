@@ -9,8 +9,7 @@ trait Vector2D:
   def y: Double
 
   // Vector addition: (x1, y1) + (x2, y2) = (x1+x2, y1+y2)
-  def +(other: Vector2D): Vector2D =
-    Vec
+  def +(other: Vector2D): Vector2D
 
   // Vector subtraction: (x1, y1) - (x2, y2) = (x1-x2, y1-y2)
   def -(other: Vector2D): Vector2D
@@ -27,32 +26,34 @@ trait Vector2D:
 object Vector2D:
   // Factory method to create Vector2D instances
   def apply(x: Double, y: Double): Vector2D =
-    Vector2D(x, y)
+    Vector2DImpl(x, y)
 
-  public class Vector2DImpl( override val x: Double,
-                          override val y: Double) extends Vector2D
   // Common vectors (optional but nice)
   val zero: Vector2D = apply(0.0, 0.0)
   val i: Vector2D = apply(1.0, 0.0) // Unit vector along x-axis
   val j: Vector2D = apply(0.0, 1.0) // Unit vector along y-axis
 
-  override def +(other: Vector2D): Vector2D =
-    Vector2DImpl(other.x + this.x, other.y + this.y)
+  class Vector2DImpl( override val x: Double,
+                          override val y: Double) extends Vector2D:
 
-  // Vector subtraction: (x1, y1) - (x2, y2) = (x1-x2, y1-y2)
-  override def -(other: Vector2D): Vector2D =
-    Vector2DImpl(other.x - this.x, other.y - this.y)
+    override def +(other: Vector2D): Vector2D =
+      Vector2DImpl(other.x + this.x, other.y + this.y)
 
-  // Scalar multiplication: s * (x, y) = (s*x, s*y)
-  override def *(scalar: Double): Vector2D =
-    Vector2DImpl(this.x * x, this.y * y)
+    // Vector subtraction: (x1, y1) - (x2, y2) = (x1-x2, y1-y2)
+    override def -(other: Vector2D): Vector2D =
+      Vector2DImpl(other.x - this.x, other.y - this.y)
 
-  // Dot product: (x1, y1) · (x2, y2) = x1*x2 + y1*y2
-  override def dot(other: Vector2D): Double =
-    
+    // Scalar multiplication: s * (x, y) = (s*x, s*y)
+    override def *(scalar: Double): Vector2D =
+      Vector2DImpl(this.x * scalar, this.y * scalar)
 
-  // Magnitude (length): ||(x, y)|| = sqrt(x*x + y*y)
-  override def magnitude: Double
+    // Dot product: (x1, y1) · (x2, y2) = x1*x2 + y1*y2
+    override def dot(other: Vector2D): Double =
+      this.x * x + this.y * y
+
+    // Magnitude (length): ||(x, y)|| = sqrt(x*x + y*y)
+    override def magnitude: Double =
+      math.sqrt(this.x * x + this.y * y)
 /** Hints:
  *   - Implement Vector2D with a Vector2DImpl class.
  *   - Initially, use a regular `class`. Check that equality (==) and
