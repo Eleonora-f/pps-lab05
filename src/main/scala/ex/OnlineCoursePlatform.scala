@@ -95,7 +95,7 @@ object OnlineCoursePlatform:
   case class OnlineCoursePlatformImpl(var courses: Set[Course] = Set.empty) extends OnlineCoursePlatform:
 
     def addCourse(course: Course): Unit =
-      course = 
+      course =
 
     def findCoursesByCategory(category: String): Sequence[Course]
 
